@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "insta-agent",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-09-01",
+  "observability": { "enabled": true },
+
+  // Free D1 database for chats, leads and settings.
+  // Run `npx wrangler d1 create insta-agent` and paste the id it prints here.
+  "d1_databases": [
+    { "binding": "DB", "database_name": "insta-agent", "database_id": "6285151b-728d-488d-8fe4-3cceeaac1b6d" }
+  ],
+
+  // Free Workers AI (10,000 neurons/day on the free plan) writes the DM replies.
+  "ai": { "binding": "AI" },
+
+  // Refresh the Instagram token every Monday so it never hits its 60-day expiry.
+  "triggers": { "crons": ["0 3 * * 1"] },
+
+  "vars": {
+    "BUSINESS_NAME": "Exovio Agency",
+    "CONTACT_EMAIL": "hello.exovio@gmail.com",
+    "AI_MODEL": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+    "IG_API_VERSION": "v23.0",
+    "DRY_RUN": "false"
+  }
+
+  // Secrets (set with `npx wrangler secret put <NAME>`, never commit them):
+  //   IG_APP_SECRET         Instagram app secret, used to verify webhooks really come from Meta
+  //   IG_ACCESS_TOKEN       Instagram user access token for your business account
+  //   WEBHOOK_VERIFY_TOKEN  any random string, also pasted into the Meta webhook settings
+  //   MCP_TOKEN             any long random string, given to Muse as the connector's bearer token
+}

@@ -1,0 +1,21 @@
+{
+  "name": "insta-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Free 24/7 Instagram DM assistant for a web dev agency, with a Meta Muse connector (MCP).",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "db:init:local": "wrangler d1 execute insta-agent --local --file=schema.sql",
+    "db:init:remote": "wrangler d1 execute insta-agent --remote --file=schema.sql",
+    "test:local": "node scripts/test-local.mjs",
+    "dev:test": "wrangler d1 execute insta-agent-test --local --config scripts/wrangler.test.jsonc --file schema.sql && wrangler dev --config scripts/wrangler.test.jsonc --port 8787"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261003.1",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.147.0"
+  }
+}

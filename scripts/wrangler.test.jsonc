@@ -1,0 +1,20 @@
+// Offline test config: same worker without the Workers AI binding (which always needs a Cloudflare
+// login), so replies take the "AI unavailable" fallback path. Used by `npm run dev:test`.
+{
+  "name": "insta-agent-test",
+  "main": "../src/index.ts",
+  "compatibility_date": "2025-09-01",
+  "d1_databases": [{ "binding": "DB", "database_name": "insta-agent-test", "database_id": "local-test" }],
+  "vars": {
+    "BUSINESS_NAME": "Test Agency",
+    "CONTACT_EMAIL": "test@example.com",
+    "AI_MODEL": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+    "IG_API_VERSION": "v23.0",
+    "DRY_RUN": "true",
+    // Dummy secrets for local testing only (scripts/test-local.mjs uses the same values).
+    "IG_APP_SECRET": "local-test-secret",
+    "IG_ACCESS_TOKEN": "local-test-token",
+    "WEBHOOK_VERIFY_TOKEN": "local-verify-token",
+    "MCP_TOKEN": "local-mcp-token"
+  }
+}
